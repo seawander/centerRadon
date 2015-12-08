@@ -2,8 +2,15 @@
 
 This code is firstly used to determine the centers of the stars for the HST-STIS coronagraphic archive.
 
+## Installation
+Checkout the code from this Github repository. Then open up a terminal window and navigate to the directory for this package. Run the following command to have an installation that will evolve with the development of this codebase.
+```
+$ python setup.py develop
+```
+
 ## Running the code:
 ```python
+import radonCenter
 (x_cen, y_cen) = radonCenter.searchCenter(image, x_ctr_assign, y_ctr_assign, size_window = image.shape[0]/2)
 ```
 
