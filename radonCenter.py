@@ -2,8 +2,6 @@ import numpy as np
 from astropy.io import fits
 from scipy.interpolate import interp2d
 
-#searchCenter is the main function
-
 def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 1):
     """This function returns all the coordinates of the sampling region, the center of the region is (0,0)
     When applying to matrices, don't forget to SHIFT THE CENTER!
@@ -73,7 +71,7 @@ def smoothCostFunction(costFunction, halfWidth = 0):
     return newFunction
     
  
-def searchCenter(image, x_ctr_assign, y_ctr_assign, size_cost = 5, theta = [45, 135], smooth = 2, decimals = 2):
+def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, size_cost = 5, theta = [45, 135], smooth = 2, decimals = 2):
     """
     This function searches the center in a grid, 
     calculate the cost function of Radon Transform (Pueyo et al., 2015), 
@@ -84,7 +82,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_cost = 5, theta = [45, 
         image: 2d array.
         x_ctr_assign: the assigned x-center, or starting x-position; for STIS, the "CRPIX1" header is suggested.
         x_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
-        #size_window: half width of the sampling region; size_window = image.shape[0]/2 - size_cost is suggested. Will add this option next time.
+        size_window: half width of the sampling region; size_window = image.shape[0]/2 is suggested.
         size_cost: search the center within +/- size_cost pixels, i.e., a square region.
         theta: the angle range of the sampling region; default: [45, 135] for the anti-diagonal and diagonal directions.
         smooth: smooth the cost function, for one pixel, replace it by the average of its +/- smooth neighbours; defualt = 2.
@@ -108,7 +106,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_cost = 5, theta = [45, 
     #The above 3 lines create the centers of the search region
     #The cost function stores the sum of all the values in the sampling region
     
-    size_window = image.shape[0]/2 - size_cost
+    size_window = size_window - size_cost
     (xs, ys) = samplingRegion(size_window, theta)
     #the center of the sampling region is (0,0), don't forget to shift the center!
 
