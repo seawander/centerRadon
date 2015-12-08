@@ -2,4 +2,12 @@ Determination of Star Centers based on Radon Transform (Pueyo et al., 2015; 2015
 
 This code is firstly used to determine the centers of the stars for the HST-STIS coronagraphic archive.
 
+Running the code:
+	(x_cen, y_cen) = radonCenter.searchCenter(image, x_ctr_assign, y_ctr_assign)
+where
+	image: 2d array.
+        x_ctr_assign: the assigned x-center, or starting x-position; for STIS, the "CRPIX1" header is suggested.
+        x_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
+
+
 
