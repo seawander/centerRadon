@@ -9,7 +9,7 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
         size_window: the radius of the sampling region. The whole region should thus have a length of 2*size_window+1.
         theta: the angle range of the sampling region, default: [45, 135] for the anti-diagonal and diagonal directions.
         m: the minimum fraction of size_window, default: 0.2 (i.e., 20%). In this way, the saturated region can be excluded.
-        M: the maximum fraction of size_window, default: 0.8 (i.e., 80%).
+        M: the maximum fraction of size_window, default: 0.8 (i.e., 80%). Just in case if there's some star along the diagonals.
         step: the seperation between sampling dots (units: pixel), default value is 1pix.
         decimals: the precisoin of the sampling dots (units: pixel), default value is 0.1pix.
     Output: (rows, cols)
@@ -71,7 +71,7 @@ def smoothCostFunction(costFunction, halfWidth = 0):
     return newFunction
     
  
-def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, size_cost = 5, theta = [45, 135], smooth = 2, decimals = 2):
+def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.8, size_cost = 5, theta = [45, 135], smooth = 2, decimals = 2):
     """
     This function searches the center in a grid, 
     calculate the cost function of Radon Transform (Pueyo et al., 2015), 
@@ -83,6 +83,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, size_cost = 5, 
         x_ctr_assign: the assigned x-center, or starting x-position; for STIS, the "CRPIX1" header is suggested.
         x_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
         size_window: half width of the sampling region; size_window = image.shape[0]/2 is suggested.
+            m & M:  The sampling region will be (-M*size_window, -m*size_window)U(m*size_window, M*size_window).
         size_cost: search the center within +/- size_cost pixels, i.e., a square region.
         theta: the angle range of the sampling region; default: [45, 135] for the anti-diagonal and diagonal directions.
         smooth: smooth the cost function, for one pixel, replace it by the average of its +/- smooth neighbours; defualt = 2.
@@ -107,7 +108,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, size_cost = 5, 
     #The cost function stores the sum of all the values in the sampling region
     
     size_window = size_window - size_cost
-    (xs, ys) = samplingRegion(size_window, theta)
+    (xs, ys) = samplingRegion(size_window, theta, m = m, M = M)
     #the center of the sampling region is (0,0), don't forget to shift the center!
 
     for j, x0 in enumerate(x_centers):
