@@ -1,5 +1,4 @@
 import numpy as np
-from astropy.io import fits
 from scipy.interpolate import interp2d
 
 def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 1):
