@@ -6,16 +6,16 @@ setup(
     name="radonCenter",
     version="0.1",
     author="Bin Ren",
-    author_email="bin.ren@jhu.edu ",
+    author_email="bin.ren@jhu.edu",
     url="https://github.com/seawander/centerRadon",
     py_modules=["radonCenter"],
-    description="Center corongraphic images with a radon based routine",
+    description="Center corongraphic images with a Radon transform based routine",
     classifiers=[
         "License :: OSI Approved :: BSD License",
-		"Topic :: Scientific/Engineering :: Astronomy",
+        "Topic :: Scientific/Engineering :: Astronomy",
         "Intended Audience :: Science/Research",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
     ],
-	install_requires=['numpy', 'scipy']
+    install_requires=['numpy', 'scipy']
 )
