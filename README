@@ -7,7 +7,7 @@ Running the code:
 where
 	image: 2d array.
         x_ctr_assign: the assigned x-center, or starting x-position; for STIS, the "CRPIX1" header is suggested.
-        x_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
+        y_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
 
 
 References:
