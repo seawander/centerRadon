@@ -70,44 +70,6 @@ def smoothCostFunction(costFunction, halfWidth = 0):
                 newFunction[i, j] = avg * 1.0 / surrondingNumber
     return newFunction
     
-def findCostFunctionMax(costFunction, x_centers, y_centers, decimals = 2):
-    interp_costfunction = interp2d(x_centers, y_centers, costFunction, kind='cubic')
-    
-    precision = 0.1
-    x_centers_new = np.round(np.arange(x_ctr_assign - size_cost, x_ctr_assign + size_cost + precision/10.0, precision), decimals=1)
-    y_centers_new = np.round(np.arange(y_ctr_assign - size_cost, y_ctr_assign + size_cost + precision/10.0, precision), decimals=1)
-    
-    x_cen = 0
-    y_cen = 0
-    maxcostfunction = 0
-    
-    for x in x_centers_new:
-        for y in y_centers_new:
-            value = interp_costfunction(x, y)
-            if value >= maxcostfunction:
-                maxcostfunction = value
-                x_cen = x
-                y_cen = y
-                
-    precision = 0.01
-    size_cost = 0.1
-    x_ctr_assign = x_cen
-    y_ctr_assign = y_cen
-    x_centers_new = np.round(np.arange(x_ctr_assign - size_cost, x_ctr_assign + size_cost + precision/10.0, precision), decimals=2)
-    y_centers_new = np.round(np.arange(y_ctr_assign - size_cost, y_ctr_assign + size_cost + precision/10.0, precision), decimals=2)
-    
-    maxcostfunction = 0
-    
-    for x in x_centers_new:
-        for y in y_centers_new:
-            value = interp_costfunction(x, y)
-            if value >= maxcostfunction:
-                maxcostfunction = value
-                x_cen = x
-                y_cen = y
-    
-    return x_cen, y_cen
-
  
 def searchCenter(image, x_ctr_assign, y_ctr_assign, size_cost = 5, theta = [45, 135], smooth = 2, decimals = 2):
     """
@@ -120,7 +82,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_cost = 5, theta = [45, 
         image: 2d array.
         x_ctr_assign: the assigned x-center, or starting x-position; for STIS, the "CRPIX1" header is suggested.
         x_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
-        #size_window: half width of the sampling region; size_window = image.shape[0]/2 - size_cost is suggested.
+        #size_window: half width of the sampling region; size_window = image.shape[0]/2 - size_cost is suggested. Will add this option next time.
         size_cost: search the center within +/- size_cost pixels, i.e., a square region.
         theta: the angle range of the sampling region; default: [45, 135] for the anti-diagonal and diagonal directions.
         smooth: smooth the cost function, for one pixel, replace it by the average of its +/- smooth neighbours; defualt = 2.
@@ -164,42 +126,31 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_cost = 5, theta = [45, 
     costFunction = smoothCostFunction(costFunction, halfWidth = smooth)
     #Smooth the cost function
     
-    #x_cen, y_cen = findCostFunctionMax(costFunction, x_centers, y_centers, decimals)
     interp_costfunction = interp2d(x_centers, y_centers, costFunction, kind='cubic')
     
-    precision = 0.1
-    x_centers_new = np.round(np.arange(x_ctr_assign - size_cost, x_ctr_assign + size_cost + precision/10.0, precision), decimals=1)
-    y_centers_new = np.round(np.arange(y_ctr_assign - size_cost, y_ctr_assign + size_cost + precision/10.0, precision), decimals=1)
     
-    x_cen = 0
-    y_cen = 0
-    maxcostfunction = 0
+    for decimal in range(1, decimals+1):
+        precision = 10**(-decimal)
+        if decimal >= 2:
+            size_cost = 10*precision
+        x_centers_new = np.round(np.arange(x_ctr_assign - size_cost, x_ctr_assign + size_cost + precision/10.0, precision), decimals=decimal)
+        y_centers_new = np.round(np.arange(y_ctr_assign - size_cost, y_ctr_assign + size_cost + precision/10.0, precision), decimals=decimal)
     
-    for x in x_centers_new:
-        for y in y_centers_new:
-            value = interp_costfunction(x, y)
-            if value >= maxcostfunction:
-                maxcostfunction = value
-                x_cen = x
-                y_cen = y
-                
-    precision = 0.01
-    size_cost = 0.1
-    x_ctr_assign = x_cen
-    y_ctr_assign = y_cen
-    x_centers_new = np.round(np.arange(x_ctr_assign - size_cost, x_ctr_assign + size_cost + precision/10.0, precision), decimals=2)
-    y_centers_new = np.round(np.arange(y_ctr_assign - size_cost, y_ctr_assign + size_cost + precision/10.0, precision), decimals=2)
+        x_cen = 0
+        y_cen = 0
+        maxcostfunction = 0
     
-    maxcostfunction = 0
-    
-    for x in x_centers_new:
-        for y in y_centers_new:
-            value = interp_costfunction(x, y)
-            if value >= maxcostfunction:
-                maxcostfunction = value
-                x_cen = x
-                y_cen = y
-    
+        for x in x_centers_new:
+            for y in y_centers_new:
+                value = interp_costfunction(x, y)
+                if value >= maxcostfunction:
+                    maxcostfunction = value
+                    x_cen = x
+                    y_cen = y
+        
+        x_ctr_assign = x_cen
+        y_ctr_assign = y_cen    
        
-    
+    x_cen = round(x_cen, decimals)
+    y_cen = round(y_cen, decimals)
     return x_cen, y_cen
