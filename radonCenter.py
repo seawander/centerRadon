@@ -122,7 +122,6 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.
         
             costFunction[i, j] = value  #Create the cost function
 
-    smooth = 2
     costFunction = smoothCostFunction(costFunction, halfWidth = smooth)
     #Smooth the cost function
     
