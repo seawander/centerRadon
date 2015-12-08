@@ -2,6 +2,8 @@ import numpy as np
 from astropy.io import fits
 from scipy.interpolate import interp2d
 
+#searchCenter is the main function
+
 def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 1):
     """This function returns all the coordinates of the sampling region, the center of the region is (0,0)
     When applying to matrices, don't forget to SHIFT THE CENTER!
