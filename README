@@ -1,5 +1,6 @@
-Determination of Star Centers based on Radon Transform (Pueyo et al., 2015; 2015ApJ...803...31P).
+Determination of Star Centers based on Radon Transform (Pueyo et al., 2015).
 
 This code is firstly used to determine the centers of the stars for the HST-STIS coronagraphic archive.
 
-
+References:
+Pueyo, L., Soummer, R., Hoffmann, J., et al. 2015, ApJ, 803, 31
