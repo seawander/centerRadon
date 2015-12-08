@@ -10,4 +10,6 @@ where
         x_ctr_assign: the assigned y-center, or starting y-position; for STIS, the "CRPIX2" header is suggested.
 
 
+References:
+Pueyo, L., Soummer, R., Hoffmann, J., et al. 2015, ApJ, 803, 31
 
