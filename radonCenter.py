@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.interpolate import interp2d
 
-def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 1):
+def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 2):
     """This function returns all the coordinates of the sampling region, the center of the region is (0,0)
     When applying to matrices, don't forget to SHIFT THE CENTER!
     Input:
@@ -11,33 +11,33 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
         M: the maximum fraction of size_window, default: 0.8 (i.e., 80%). Just in case if there's some star along the diagonals.
         step: the seperation between sampling dots (units: pixel), default value is 1pix.
         decimals: the precisoin of the sampling dots (units: pixel), default value is 0.1pix.
-    Output: (rows, cols)
-        rows: row indecies, flattend.
-        cols: col indecies, flattend.
+    Output: (xs, ys)
+        xs: x indecies, flattend.
+        ys: y indecies, flattend.
     Example:
-        If you call "rows, cols = samplingRegion(5)", you will get:
-        rows: array([ 2.8,  2.1,  1.4,  0.7, -0.7, -1.4, -2.1, -2.8,  2.8,  2.1,  1.4, 0.7, -0.7, -1.4, -2.1, -2.8])
-        cols: array([-2.8, -2.1, -1.4, -0.7,  0.7,  1.4,  2.1,  2.8,  2.8,  2.1,  1.4, 0.7, -0.7, -1.4, -2.1, -2.8])
+        If you call "xs, ys = samplingRegion(5)", you will get:
+        xs: array([-2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83,  2.83, 2.12,  1.41,  0.71, -0.71, -1.41, -2.12, -2.83]
+        ys: array([-2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83, -2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83]))
     """
     theta = np.array(theta)
-    zeroDegCols = np.append(np.arange(-int(size_window*M), -int(size_window*m) + 0.1 * step, step), np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step))
+    zeroDegXs = np.append(np.arange(-int(size_window*M), -int(size_window*m) + 0.1 * step, step), np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step))
     #create the column indecies if theta = 0
-    zeroDegRows = np.zeros(zeroDegCols.size)
+    zeroDegYs = np.zeros(zeroDegXs.size)
     
-    cols = np.zeros((np.size(theta), np.size(zeroDegCols)))
-    rows = np.zeros((np.size(theta), np.size(zeroDegCols)))
+    xs = np.zeros((np.size(theta), np.size(zeroDegXs)))
+    ys = np.zeros((np.size(theta), np.size(zeroDegXs)))
     
     for i, angle in enumerate(theta):
         degRad = np.deg2rad(angle)
-        angleDegRows = np.round(zeroDegRows * np.cos(degRad) - zeroDegCols * np.sin(degRad), decimals = decimals)
-        angleDegCols = np.round(zeroDegCols * np.cos(degRad) + zeroDegRows * np.sin(degRad), decimals = decimals)
-        rows[i, ] = angleDegRows
-        cols[i, ] = angleDegCols
+        angleDegXs = np.round(zeroDegXs * np.cos(degRad), decimals = decimals)
+        angleDegYs = np.round(zeroDegXs * np.sin(degRad), decimals = decimals)
+        xs[i, ] = angleDegXs
+        ys[i, ] = angleDegYs
     
-    rows = rows.flatten()
-    cols = cols.flatten()
+    xs = xs.flatten()
+    ys = ys.flatten()
 
-    return rows, cols
+    return xs, ys
 
 
 def smoothCostFunction(costFunction, halfWidth = 0):
