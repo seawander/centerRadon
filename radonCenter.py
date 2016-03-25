@@ -21,7 +21,7 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
     """
     theta = np.array(theta)
     zeroDegXs = np.append(np.arange(-int(size_window*M), -int(size_window*m) + 0.1 * step, step), np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step))
-    #create the column indecies if theta = 0
+    #create the x indecies for theta = 0, will be used in the loop.
     zeroDegYs = np.zeros(zeroDegXs.size)
     
     xs = np.zeros((np.size(theta), np.size(zeroDegXs)))
