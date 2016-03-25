@@ -10,7 +10,7 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
         m: the minimum fraction of size_window, default: 0.2 (i.e., 20%). In this way, the saturated region can be excluded.
         M: the maximum fraction of size_window, default: 0.8 (i.e., 80%). Just in case if there's some star along the diagonals.
         step: the seperation between sampling dots (units: pixel), default value is 1pix.
-        decimals: the precisoin of the sampling dots (units: pixel), default value is 0.1pix.
+        decimals: the precisoin of the sampling dots (units: pixel), default value is 0.01pix.
     Output: (xs, ys)
         xs: x indecies, flattend.
         ys: y indecies, flattend.
