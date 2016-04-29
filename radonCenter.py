@@ -18,7 +18,11 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
         If you call "xs, ys = samplingRegion(5)", you will get:
         xs: array([-2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83,  2.83, 2.12,  1.41,  0.71, -0.71, -1.41, -2.12, -2.83]
         ys: array([-2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83, -2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83]))
-    """
+    """    
+    if type(theta) == int or type(theta) == float:
+        theta = [theta]
+    #When there is only one angle
+    
     theta = np.array(theta)
     zeroDegXs = np.append(np.arange(-int(size_window*M), -int(size_window*m) + 0.1 * step, step), np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step))
     #create the x indecies for theta = 0, will be used in the loop.
