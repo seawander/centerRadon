@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.interpolate import interp2d
 
-def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 2):
+def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, decimals = 2, ray = False):
     """This function returns all the coordinates of the sampling region, the center of the region is (0,0)
     When applying to matrices, don't forget to SHIFT THE CENTER!
     Input:
@@ -11,21 +11,29 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
         M: the maximum fraction of size_window, default: 0.8 (i.e., 80%). Just in case if there's some star along the diagonals.
         step: the seperation between sampling dots (units: pixel), default value is 1pix.
         decimals: the precisoin of the sampling dots (units: pixel), default value is 0.01pix.
+        ray: only half of the line?
     Output: (xs, ys)
         xs: x indecies, flattend.
         ys: y indecies, flattend.
     Example:
-        If you call "xs, ys = samplingRegion(5)", you will get:
+        1. If you call "xs, ys = samplingRegion(5)", you will get:
         xs: array([-2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83,  2.83, 2.12,  1.41,  0.71, -0.71, -1.41, -2.12, -2.83]
         ys: array([-2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83, -2.83, -2.12, -1.41, -0.71,  0.71,  1.41,  2.12,  2.83]))
-    """    
-    if type(theta) == int or type(theta) == float:
+        2. For "radonCenter.samplingRegion(5, ray=True)", you will get:
+        xs: array([ 0.71,  1.41,  2.12,  2.83, -0.71, -1.41, -2.12, -2.83])
+        ys: array([ 0.71,  1.41,  2.12,  2.83,  0.71,  1.41,  2.12,  2.83])
+    """
+    
+    if type(theta) == int or type(theta) == float or type(theta) ==  np.int64:
         theta = [theta]
     #When there is only one angle
-    
+        
     theta = np.array(theta)
-    zeroDegXs = np.append(np.arange(-int(size_window*M), -int(size_window*m) + 0.1 * step, step), np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step))
-    #create the x indecies for theta = 0, will be used in the loop.
+    if ray:
+        zeroDegXs = np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step)
+    else:
+        zeroDegXs = np.append(np.arange(-int(size_window*M), -int(size_window*m) + 0.1 * step, step), np.arange(int(size_window*m), int(size_window*M) + 0.1 * step, step))
+    #create the column indecies if theta = 0
     zeroDegYs = np.zeros(zeroDegXs.size)
     
     xs = np.zeros((np.size(theta), np.size(zeroDegXs)))
