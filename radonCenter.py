@@ -82,7 +82,7 @@ def smoothCostFunction(costFunction, halfWidth = 0):
     return newFunction
     
  
-def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.8, size_cost = 5, theta = [45, 135], smooth = 2, decimals = 2):
+def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.8, size_cost = 5, theta = [45, 135], ray = False, smooth = 2, decimals = 2):
     """
     This function searches the center in a grid, 
     calculate the cost function of Radon Transform (Pueyo et al., 2015), 
@@ -97,6 +97,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.
             m & M:  The sampling region will be (-M*size_window, -m*size_window)U(m*size_window, M*size_window).
         size_cost: search the center within +/- size_cost pixels, i.e., a square region.
         theta: the angle range of the sampling region; default: [45, 135] for the anti-diagonal and diagonal directions.
+        ray: is the theta a line or a ray? Default: line.
         smooth: smooth the cost function, for one pixel, replace it by the average of its +/- smooth neighbours; defualt = 2.
         decimals: the precision of the centers; default = 2 for a precision of 0.01.
     Output:
@@ -119,7 +120,7 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.
     #The cost function stores the sum of all the values in the sampling region
     
     size_window = size_window - size_cost
-    (xs, ys) = samplingRegion(size_window, theta, m = m, M = M)
+    (xs, ys) = samplingRegion(size_window, theta, m = m, M = M, ray = ray)
     #the center of the sampling region is (0,0), don't forget to shift the center!
 
     for j, x0 in enumerate(x_centers):
