@@ -24,7 +24,7 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
         ys: array([ 0.71,  1.41,  2.12,  2.83,  0.71,  1.41,  2.12,  2.83])
     """
     
-    if if np.asarray(theta).shape == ():
+    if np.asarray(theta).shape == ():
         theta = [theta]
     #When there is only one angle
         
