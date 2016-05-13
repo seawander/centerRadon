@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="radonCenter",
-    version="0.1",
+    version="1.0",
     author="Bin Ren",
     author_email="bin.ren@jhu.edu",
     url="https://github.com/seawander/centerRadon",
