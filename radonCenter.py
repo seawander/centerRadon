@@ -55,6 +55,7 @@ def samplingRegion(size_window, theta = [45, 135], m = 0.2, M = 0.8, step = 1, d
 def smoothCostFunction(costFunction, halfWidth = 0):
     """
     smoothCostFunction will smooth the function within +/- halfWidth, i.e., to replace the value with the average within +/- halfWidth pixel.
+    This function can be genrally used to smooth any 2D matrix.
     Input:
         costFunction: original cost function, a matrix.
         halfWdith: the half width of the smoothing region, default = 0 pix.
