@@ -70,15 +70,18 @@ def smoothCostFunction(costFunction, halfWidth = 0):
         rangeShift = np.arange(-halfWidth, halfWidth + 0.1, dtype=int)
         for i in rowRange:
             for j in colRange:
-                surrondingNumber = (2 * halfWidth + 1) ** 2
-                avg = 0
-                for ii in (i + rangeShift):
-                    for jj in (j + rangeShift):
-                        if (not (ii in rowRange)) or (not (jj in colRange)):
-                            surrondingNumber -= 1
-                        else:
-                            avg += costFunction[ii, jj]
-                newFunction[i, j] = avg * 1.0 / surrondingNumber
+                if np.isnan(costFunction[i, j]):
+                    newFunction[i, j] = np.nan
+                else:
+                    surrondingNumber = (2 * halfWidth + 1) ** 2
+                    avg = 0
+                    for ii in (i + rangeShift):
+                        for jj in (j + rangeShift):
+                            if (not (ii in rowRange)) or (not (jj in colRange)) or (np.isnan(costFunction[ii, jj])):
+                                surrondingNumber -= 1
+                            else:
+                                avg += costFunction[ii, jj]
+                    newFunction[i, j] = avg * 1.0 / surrondingNumber
     return newFunction
     
  
