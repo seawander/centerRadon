@@ -155,14 +155,16 @@ def searchCenter(image, x_ctr_assign, y_ctr_assign, size_window, m = 0.2, M = 0.
         x_cen = 0
         y_cen = 0
         maxcostfunction = 0
+        value = np.zeros((y_centers_new.shape[0], x_centers_new.shape[0]))
     
-        for x in x_centers_new:
-            for y in y_centers_new:
-                value = interp_costfunction(x, y)
-                if value >= maxcostfunction:
-                    maxcostfunction = value
-                    x_cen = x
-                    y_cen = y
+        for j, x in enumerate(x_centers_new):
+            for i, y in enumerate(y_centers_new):
+                value[i, j] = interp_costfunction(x, y)
+        
+        idx = np.where(value == np.max(value))
+        #Just in case when there are multile maxima, then use the average of them. 
+        x_cen = np.mean(x_centers_new[idx[1]])
+        y_cen = np.mean(y_centers_new[idx[0]])
         
         x_ctr_assign = x_cen
         y_ctr_assign = y_cen    
