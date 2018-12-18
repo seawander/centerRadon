@@ -1,4 +1,4 @@
-# Determination of Star Centers based on [Radon Transform](https://ui.adsabs.harvard.edu/#abs/2015ApJ...803...31P/abstract).
+# Determination of Star Centers based on [Radon Transform](https://ui.adsabs.harvard.edu/#abs/2015ApJ...803...31P/abstract) [![DOI](https://zenodo.org/badge/47586602.svg)](https://zenodo.org/badge/latestdoi/47586602)
 
 This code is firstly used to determine the centers of the stars for the HST-STIS coronagraphic archive (Ren et al. [2017](http://adsabs.harvard.edu/abs/2017SPIE10400E..21R)).
 
