@@ -1,6 +1,6 @@
-# Determination of Star Centers based on Radon Transform (Pueyo et al., 2015).
+# Determination of Star Centers based on [Radon Transform](https://ui.adsabs.harvard.edu/#abs/2015ApJ...803...31P/abstract).
 
-This code is firstly used to determine the centers of the stars for the HST-STIS coronagraphic archive.
+This code is firstly used to determine the centers of the stars for the HST-STIS coronagraphic archive (Ren et al. [2017](http://adsabs.harvard.edu/abs/2017SPIE10400E..21R)).
 
 ## Installation
 Checkout the code from this Github repository. Then open up a terminal window and navigate to the directory for this package. Run the following command to have an installation that will evolve with the development of this codebase.
@@ -23,3 +23,6 @@ import radonCenter
 
 ## References:
 Pueyo, L., Soummer, R., Hoffmann, J., et al. 2015, [ApJ, 803, 31](https://ui.adsabs.harvard.edu/#abs/2015ApJ...803...31P/abstract)
+
+Ren, B., Pueyo, L., Perrin, M. D., Debes, J. H, & Choquet, É. 2017, [Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, 10400, 1040021](http://adsabs.harvard.edu/abs/2017SPIE10400E..21R)
+
